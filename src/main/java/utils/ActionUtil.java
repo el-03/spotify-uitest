@@ -133,14 +133,14 @@ public class ActionUtil {
     public static void scrollDown() {
         AndroidElement screen = androidDriver
                 .findElement(By.id("action_bar_root"));
-        Point center =  screen.getCenter();
+        Point center = screen.getCenter();
         int width = screen.getSize().width;
         int height = screen.getSize().height;
         int xc = center.getX() - (width / 2) + 20;
         int yi = center.getY() + (height / 3);
         int yf = center.getY() - (height / 2);
-        System.out.println("xi, yi = " + xc + " " + yi);
-        System.out.println("xf, yf = " + xc + " " + yf);
+//        System.out.println("xi, yi = " + xc + " " + yi);
+//        System.out.println("xf, yf = " + xc + " " + yf);
         @SuppressWarnings("rawtypes")
         TouchAction scroll = new TouchAction(androidDriver);
         scroll.press(PointOption.point(xc, yi))
