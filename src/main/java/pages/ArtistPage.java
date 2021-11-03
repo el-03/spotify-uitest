@@ -1,7 +1,9 @@
 package pages;
 
-import static locators.ArtistLocator.*;
-import static utils.ActionUtil.*;
+import static locators.ArtistLocator.ARTIST_NAME_TEXT_XPATH;
+import static locators.ArtistLocator.SEE_DISCOGRAPHY_BUTTON_XPATH;
+import static utils.ActionUtil.scrollThenTap;
+import static utils.ActionUtil.waitElementWithText;
 
 public class ArtistPage {
 

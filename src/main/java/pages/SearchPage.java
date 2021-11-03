@@ -1,21 +1,18 @@
 package pages;
 
 import io.appium.java_client.android.AndroidElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.IOException;
 import java.util.List;
 
 import static drivers.AndroidDriverInstance.androidDriver;
-import static locators.ArtistReleasesLocator.ALBUM_SINGLE_LIST_TEXT_XPATH;
 import static locators.SearchLocator.*;
-import static utils.ActionUtil.*;
+import static utils.ActionUtil.inputElementByKeyboard;
+import static utils.ActionUtil.waitImageElement;
 
 public class SearchPage {
 
-    public boolean isOnPage() throws IOException {
-        return waitTwoElements(SEARCH_ICON_ACC_ID, getElementByIM(SEARCH_ICON_ACTIVE_IMG), 30);
+    public boolean isOnPage() {
+        return waitImageElement(SEARCH_ICON_ACC_ID, SEARCH_ICON_ACTIVE_IMG, 30);
     }
 
     public void inputSearchBar(String input) {

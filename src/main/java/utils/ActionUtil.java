@@ -27,30 +27,28 @@ import static drivers.AndroidDriverInstance.*;
 
 public class ActionUtil {
 
-    public static boolean waitElement(By targetElement, int timeOutInSecond) {
-        WebDriverWait wait = new WebDriverWait(androidDriver, timeOutInSecond);
-        return wait.until(ExpectedConditions.presenceOfElementLocated(targetElement)).isDisplayed();
-    }
-
     public static boolean waitElementWithText(By targetElement, String text, int timeOutInSecond) {
         WebDriverWait wait = new WebDriverWait(androidDriver, timeOutInSecond);
-        wait.until(ExpectedConditions.presenceOfElementLocated(targetElement));
-        AndroidElement element = androidDriver.findElement(targetElement);
+        AndroidElement element = (AndroidElement) wait.until(ExpectedConditions.presenceOfElementLocated(targetElement));
         return element.getText().toLowerCase().contains(text.toLowerCase());
     }
 
-    public static boolean waitTwoElements(By targetElementOne, By targetElementTwo, int timeOutInSecond) {
+    public static boolean waitImageElement(By refElement, String imageElement, int timeOutInSecond) {
         WebDriverWait wait = new WebDriverWait(androidDriver, timeOutInSecond);
 
         try {
-            wait.until(ExpectedConditions.presenceOfElementLocated(targetElementOne)).isDisplayed();
+            wait.until(ExpectedConditions.presenceOfElementLocated(refElement)).isDisplayed();
         } catch (Exception e) {
             System.out.print("Cannot find targetElementOne!");
             return false;
         }
 
         try {
-            return wait.until(ExpectedConditions.presenceOfElementLocated(targetElementTwo)).isDisplayed();
+            AndroidElement element = (AndroidElement) wait.until(ExpectedConditions.presenceOfElementLocated(getElementByImage(imageElement)));
+            if (IMECaptureStatus) {
+                doElementCapture(element, true);
+            }
+            return element.isDisplayed();
         } catch (Exception e) {
             System.out.print("Cannot find targetElementTwo!");
             return false;
@@ -71,11 +69,9 @@ public class ActionUtil {
         action.sendKeys(input).perform();
     }
 
-    public static void doIMECapture(By targetElement) throws IOException {
-        AndroidElement element = androidDriver.findElement(targetElement);
+    public static void doElementCapture(AndroidElement element, boolean usingIM) throws IOException {
         System.out.println("Capturing the snapshot of the element on the page");
         System.out.printf("Element position = [%s, %s] %n", element.getRect().x, element.getRect().y);
-        System.out.printf("Image Match Score = %s %n", element.getAttribute("score"));
 
         File srcFile = androidDriver.getScreenshotAs(OutputType.FILE);
         String filePath = IMECaptureDir + File.separator;
@@ -102,7 +98,14 @@ public class ActionUtil {
         op.filter(img, rgbImage);
         g2d.setColor(Color.RED);
         g2d.setStroke(new BasicStroke(10));
+        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 25));
         g2d.drawRect(elX, elY, elW, elH);
+
+        if (usingIM) {
+            String imgScore = element.getAttribute("score");
+            System.out.printf("Image Match Score = %s %n", element.getAttribute("score"));
+            g2d.drawString(imgScore.substring(0, 5), elX, elY - 10);
+        }
         g2d.dispose();
 
         try {
@@ -113,12 +116,9 @@ public class ActionUtil {
         }
     }
 
-    public static By getElementByIM(String targetImage) throws IOException {
+    public static By getElementByImage(String targetImage) throws IOException {
         File refImgFile = new File(System.getProperty("user.dir") + "/src/main/resources/imageElements/" + targetImage);
         String imageB64 = Base64.getEncoder().encodeToString(Files.readAllBytes(refImgFile.toPath()));
-        if (IMECaptureStatus) {
-            doIMECapture(MobileBy.image(imageB64));
-        }
         return MobileBy.image(imageB64);
     }
 

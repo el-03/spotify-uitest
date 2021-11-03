@@ -6,8 +6,6 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import pages.*;
 
-import java.io.IOException;
-
 public class CheckingArtworkStep {
 
     HomePage homePage = new HomePage();
@@ -17,7 +15,7 @@ public class CheckingArtworkStep {
     AlbumSinglePage albumSinglePage = new AlbumSinglePage();
 
     @Given("I am on Home Page")
-    public void iAmOnHomePage() throws IOException {
+    public void iAmOnHomePage() {
         Assert.assertTrue(homePage.isOnPage());
     }
 
@@ -27,7 +25,7 @@ public class CheckingArtworkStep {
     }
 
     @When("I am on Search Page")
-    public void iAmOnSearchPage() throws IOException {
+    public void iAmOnSearchPage() {
         Assert.assertTrue(searchPage.isOnPage());
     }
 
@@ -72,7 +70,7 @@ public class CheckingArtworkStep {
     }
 
     @Then("I can see the artwork same as {string}")
-    public void iCanSeeTheArtworkSameAs(String arg0) throws IOException {
+    public void iCanSeeTheArtworkSameAs(String arg0) {
         Assert.assertTrue(albumSinglePage.presenceOfArtworkImage(arg0));
     }
 }
