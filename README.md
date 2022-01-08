@@ -1,21 +1,14 @@
 # spotify-uitest
-
----
-
 As its name, this project contains a UI test script to test the Spotify app (Android) that uses image-based elements in some of its
 steps.
-## Test Case
 
----
+## Test Case
 For now, there is only one test case: _Checking album or single a particular artist with a correct artwork_
 
 ## Running the Test Case
-
----
 Before running the test case, there are two things that have to be reviewed, the configuration, and the image asset.
 
 ### Configuration
-
 The configuration of the code is on `config.properties` file that located in `src/main/java/config` folder. It contains 5
 variables.
 - `appiumUrl` : The url of the appium server.
@@ -60,12 +53,8 @@ There are 2 ways to run it:
 - Executing via terminal `./gradlew clean test -Dcucumber.options="--tags @Positive"`
 
 ## Action Functions
-
----
 All the action functions that are used, are placed on `ActionUtil.java` that located in `src/main/java/utils`. The explanation of each
 function has been attached.
 
 ## Note
-
----
 - If there's an inquiry or anything related to this project, don't hesitate to contact me.
