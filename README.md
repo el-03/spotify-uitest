@@ -44,7 +44,7 @@ This step is asserting the presence of `search_icon-active.jpg`
 ```gherkin
 Then I can see the artwork same as "<artworkFilePath>"
 ```
-This step is asserting the presence of whatever image that mapped into `artWorkFilePath` in the scenario outline. The
+This step is asserting the presence of whatever image that mapped into `artworkFilePath` in the scenario outline. The
 author places the example case into `albumSingle` folder.
 
 ### Running It
